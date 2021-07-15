@@ -1,8 +1,11 @@
 const express = require('express');
+const cors = require('cors');
+
 const { port } = require('./config');
 const { cachedStopForum } = require('./requesters');
 
 const app = express();
+app.use(cors());
 
 app.get('/stopforumspam', async (req, res) => {
   const data = await cachedStopForum(req.query.ip);
