@@ -1,0 +1,2 @@
+### GET stopspamforum
+GET http://localhost:5000/stopforumspam?ip=154.27.71.100
