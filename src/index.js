@@ -3,7 +3,7 @@ const cors = require('cors');
 const querystring = require('querystring');
 
 const { port, apiKeyIpStack } = require('./config');
-const { cachedStopForum, cachedIpStack } = require('./requesters');
+const { cachedStopForum, cachedIpStack, cachedAbuseIPDB } = require('./requesters');
 
 const app = express();
 app.use(cors());
@@ -14,7 +14,7 @@ app.get('/stopforumspam', async (req, res) => {
 });
 
 app.get('/ipstack', async (req, res) => {
-  const data = await cachedStopForum(`/${req.query.ip}?access_key=${apiKeyIpStack}`);
+  const data = await cachedIpStack(`/${req.query.ip}?access_key=${apiKeyIpStack}`);
   res.send(data);
 });
 
@@ -23,7 +23,7 @@ app.get('/abuseipdb', async (req, res) => {
     maxAgeInDays: 90,
     ipAddress: `${req.query.ip}`,
   }
-  const data = await cachedStopForum(`/api/v2/check?${querystring.encode(query)}`);
+  const data = await cachedAbuseIPDB(`/api/v2/check?${querystring.encode(query)}`);
   res.send(data);
 });
 
