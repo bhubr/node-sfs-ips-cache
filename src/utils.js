@@ -10,7 +10,7 @@ client.on("error", (error) => {
 
 const redisGetAsync = promisify(client.get).bind(client);
 const redisSetexAsync = promisify(client.setex).bind(client);
-const axiosFetchUrl = (url) => axios.get(url).then(r => r.data);
+const axiosFetchUrl = (url, options) => axios.get(url, options).then(r => r.data);
 
 module.exports = {
   redisGetAsync,

@@ -1,4 +1,4 @@
-const { redisGetAsync, redisSetexAsync, axiosFetchUrl} = require('./utils');
+const { redisGetAsync, redisSetexAsync, axiosFetchUrl } = require('./utils');
 const { cacheLifetime, apiKeyAbuseIPDB } = require('./config');
 
 const cachedRequestFactory = ({
@@ -10,13 +10,13 @@ const cachedRequestFactory = ({
   options = {},
 }) => async (pathname) => {
   const url = `${baseUrl}${pathname}`;
-  const existing = await redisGet(url, options);
+  const existing = await redisGet(url);
   if (existing) {
     console.log('From cache', url);
     return JSON.parse(existing);
   }
   console.log('From url', url);
-  const data = await fetchUrl(url);
+  const data = await fetchUrl(url, options);
   await redisSetex(url, lifetime, JSON.stringify(data));
   return data;
 }
